@@ -1,0 +1,204 @@
+<!-- BEGIN: main -->
+<script type="text/javascript">
+
+
+
+$(function() {
+
+        $("#{form_id}").submit(function(e) {
+        	
+        	if( $("#{form_id}_input_submit").length > 0){
+        		$submit = $("#{form_id}_input_submit");
+            	$restoreOpacity = $submit.css("opacity");	
+        	}
+        	
+        	
+        	 e.preventDefault();
+
+        	 if( {useAjaxSubmit} ) {
+
+                	submitAjaxForm('{form_id}', '{action}', {onSuccessCallback},{beforeSubmit});
+                	return false;
+             }else{
+            	 
+            	
+         		$submit.css({"opacity":$restoreOpacity});
+         		$submit.removeAttr( "disabled" );
+             }
+        	 
+        });
+	
+            								
+});
+
+function successDefault_{form_id}(data ){
+	try {
+		
+		 jsondata = $.parseJSON(data);
+
+		 if( jsondata != null && jsondata["error"]!=null){
+				showMessageError( jsondata["error"], false );
+				
+			}
+
+		 if( jsondata != null && jsondata["info"]!=null){
+				//showMessageInfo( jsondata["info"], false );
+				//$('#{form_id}').reset();
+				{onCancel};
+				
+			}
+		 			
+	} catch (e) {
+	   return;
+	}
+	  
+}
+
+
+</script>
+
+<form <!-- BEGIN: property --> {name}="{value}" <!-- END: property --> >
+
+	
+		<fieldset>
+	    <!-- BEGIN: legend -->
+		<legend>{value}	</legend>
+		 
+		<!-- END: legend -->
+
+		
+		<!-- BEGIN: oid -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					   {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: oid -->
+		<!-- BEGIN: integrante_form_proyecto_oid -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: integrante_form_proyecto_oid -->
+		
+		<!-- BEGIN: ds_apellido -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: ds_apellido -->
+		<!-- BEGIN: dt_baja -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: dt_baja -->
+		<!-- BEGIN: ds_consecuencias -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    <br>{input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: ds_consecuencias -->
+		
+		<!-- BEGIN: ds_motivos -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    <br>{input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: ds_motivos -->
+		
+		
+		<!-- BEGIN: bl_mincategorizados -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    <label>Considerando la baja, indicar si el el proyecto cumple con los siguientes requisitos</label>
+					    <br><br>
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}" id="label_{input_name}" style="width:450px">{value}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: bl_mincategorizados -->
+		
+		<!-- BEGIN: bl_minmayordedicacion -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}" id="label_{input_name}" style="width:605px">{value}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: bl_minmayordedicacion -->
+		
+		
+
+		
+		</fieldset>
+		
+		
+	<!-- BEGIN: field_hidden -->
+	{input_hidden}
+	<!-- END: field_hidden -->
+	
+	{intoFormCustomHTML}
+</form>
+
+{customHTML}
+
+<!-- BEGIN: buttons -->
+<form id="buttons{inputId}">
+	<fieldset class="tblFooters">
+	
+		<!-- BEGIN: submit -->
+		<input type="button" value="{lbl_submit}" id="{form_id}_input_submit" onclick="javascript:submitForm('{form_id}');">
+		<!-- END: submit -->
+		
+		<!-- BEGIN: submit_ajax -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_submit_ajax" onclick="javascript: submitForm('{form_id}');">
+		<!-- END: submit_ajax -->
+		
+		<!-- BEGIN: button -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_button_{i}" onclick="javascript: {function}; ">
+		<!-- END: button -->
+	
+		<!-- BEGIN: cancel -->
+		<input type="button" value="{lbl_cancel}" id="{form_id}_input_cancel" onclick="javascript: {function};">
+		<!-- END: cancel -->
+		
+		<div class="camposRequeridos">(*) {msg_required_fields}</div>	
+	</fieldset>
+</form>	
+<!-- END: buttons -->
+<!-- END: main -->

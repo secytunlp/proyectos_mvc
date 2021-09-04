@@ -1,0 +1,301 @@
+<!-- BEGIN: main -->
+<script type="text/javascript">
+
+function  seleccionarInstitucion(ds_institucion){
+	$("#item-div-ds_orgbeca").append("<span id='iconoLoading' style='position:absolute;'><img src='css/grid/loading.gif' /></span>")
+	jQuery.ajax({
+	      url:"doAction?action=add_integrante_tipo_beca&ds_institucion=" + ds_institucion.value,
+	      dataType:"json",
+	      success: function(data){
+	      	
+	      	if( data != null && data["error"]!=null){
+	      		showMessageError( data["error"], true );
+	      		//inhabilitar el submit.
+	      		$("#edit_integrante_input_submit_ajax").hide();
+	      	}
+	      	
+	      	else{
+	      		$("#edit_integrante_input_submit_ajax").show();
+	      		var tipobeca = $("#ds_tipobeca").val();
+	      		$("#ds_tipobeca").empty();
+	      		$.each(data, function(k,v){
+	                $("#ds_tipobeca").append("<option value=\""+k+"\">"+v+"</option>");
+	            });
+	      		$("#ds_tipobeca").val(tipobeca);
+	      	} 	
+	      	 $("#iconoLoading").remove();
+	      }
+	});	
+	
+	
+}
+
+function  habilitarReduccion(horas, nu_horas={nu_horasinv_control}){
+	$("#item-div-nu_horasinv").append("<span id='iconoLoading' style='position:absolute;'><img src='css/grid/loading.gif' /></span>")
+	if(horas.value<nu_horas){
+		
+		$("#item-div-ds_reduccionHS").show();
+	}
+	else{
+		$("#item-div-ds_reduccionHS").hide();
+	}
+	
+	$("#iconoLoading").remove();
+}
+
+function  seleccionarTipo(tipoInvestigador_oid){
+	$("#item-div-tipoIntegrante_oid").append("<span id='iconoLoading' style='position:absolute;'><img src='css/grid/loading.gif' /></span>")
+	//if(tipoInvestigador_oid.value==6){
+		
+		$("#item-div-nu_materias").show();
+	/*}
+	else{
+		$("#item-div-nu_materias").show();
+	}*/
+	
+	$("#iconoLoading").remove();
+}
+
+$(function() {
+
+        $("#{form_id}").submit(function(e) {
+        	
+        	if( $("#{form_id}_input_submit").length > 0){
+        		$submit = $("#{form_id}_input_submit");
+            	$restoreOpacity = $submit.css("opacity");	
+        	}
+        	
+        	
+        	 e.preventDefault();
+
+        	 if( {useAjaxSubmit} ) {
+
+                	submitAjaxForm('{form_id}', '{action}', {onSuccessCallback},{beforeSubmit});
+                	return false;
+             }else{
+            	 
+            	
+         		$submit.css({"opacity":$restoreOpacity});
+         		$submit.removeAttr( "disabled" );
+             }
+        	 
+        });
+	
+            								
+});
+
+function successDefault_{form_id}(data ){
+	try {
+		
+		 jsondata = $.parseJSON(data);
+
+		 if( jsondata != null && jsondata["error"]!=null){
+				showMessageError( jsondata["error"], false );
+				
+			}
+
+		 if( jsondata != null && jsondata["info"]!=null){
+				//showMessageInfo( jsondata["info"], false );
+				//$('#{form_id}').reset();
+				{onCancel};
+				
+			}
+		 			
+	} catch (e) {
+	   return;
+	}
+	  
+}
+
+function uploadAjax(file, action, name){
+	if(($("#ds_apellido").val()!='')&&($("#cuil").val()!='')){
+		var file = file.files[0];
+		var data = new FormData();
+		var $submit_ajax = $("#{form_id}_input_submit_ajax");
+		var $restoreOpacity = $submit_ajax.css("opacity");
+		data.append(name,file);
+		data.append('proyecto',$("#integrante_form_proyecto_oid").val());
+		data.append('apellido',$("#ds_apellido").val());
+		data.append('cuil',$("#cuil").val());
+		 $.ajax({
+		            url:action,
+		            type:'POST',
+		            contentType:false,
+		            data:data,
+		            processData:false,  
+		            cache:false,
+		            beforeSend: function(){
+						$submit_ajax.css({opacity:0.5});
+						$submit_ajax.attr("disabled", "disabled");
+						$("#"+name+"_cargado").html("");
+					  },
+					  complete: function(){ 
+					  },
+					  error: function(){ 
+						 	
+						 	$submit_ajax.css({"opacity":$restoreOpacity});
+						 	$submit_ajax.removeAttr( "disabled" )
+						  },
+					  success: function(content){
+					    
+						
+						$submit_ajax.css({"opacity":$restoreOpacity});
+						$submit_ajax.removeAttr( "disabled" );
+						 
+						
+						
+					  }
+						  
+		            
+		 }).done(function(msg){
+			    $("#"+name+"_cargado").append(msg); //Mostrara los archivos cargados en el div con el id "Cargados"
+		  });
+	} 
+	else{
+		$("#"+name+"_cargado").html("");
+		$("#"+name+"_cargado").append('<span style="color:#FF0000; font-weight:bold">{apellido_requerido}</span>');
+		setTimeout(function() {
+			$("#ds_apellido").focus();
+		}, 1500);
+		
+	}
+		
+}
+
+$( document ).ready(function() {
+	$("#tipoIntegrante_oid").change();	
+	$("#nu_horasinv").change();	
+});
+</script>
+
+<form <!-- BEGIN: property --> {name}="{value}" <!-- END: property --> >
+
+	<!-- BEGIN: fieldset -->
+		<fieldset>
+	    <!-- BEGIN: legend -->
+		<legend>{value}</legend>
+		<!-- END: legend -->
+
+		<table width="100%">
+			<tr>
+				<!-- BEGIN:column -->
+				<td>
+					<!-- BEGIN: field -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: field -->
+				</td>
+				<!-- END:column -->
+			</tr>
+			
+			</table>
+		
+		</fieldset>
+		<!-- END: fieldset -->
+		<fieldset>
+		<div style="color:#A43B3B; font-weight:bold">{label_size_archivos}</div> 
+		<table width="100%">
+			<tr>
+			<!-- BEGIN: curriculum -->
+					<td>
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-curriculum">
+					    
+					     <!-- BEGIN: label -->
+					    <label for="curriculum">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    <input id="ds_curriculum" type="file" value="" size="32" name="ds_curriculum" onChange="uploadAjax(this,'{actionFile}','ds_curriculum')" {curriculum_requerido}>
+					    <!-- END: input -->
+					    <span id="ds_curriculum_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {curriculum_cargado}
+						</span> 
+						<div style="color:#A43B3B; font-weight:bold">{label_curriculum}</div> 
+					</div>
+					</td>
+		<!-- END: curriculum -->
+			</tr>
+			<tr>
+			<!-- BEGIN: ds_actividades -->
+					<td>
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_actividades">
+					    
+					     <!-- BEGIN: label -->
+					    <label for="ds_actividades">{value} *:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    <input id="ds_actividades" type="file" value="" size="32" name="ds_actividades" onChange="uploadAjax(this,'{actionFile}','ds_actividades')" {ds_actividades_requerido}>
+					    <!-- END: input -->
+					    <span id="ds_actividades_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {ds_actividades_cargado}
+						</span> 
+						
+					</div>
+					</td>
+		<!-- END: ds_actividades -->
+			</tr>
+			<tr>
+			<!-- BEGIN: ds_resolucionBeca -->
+					<td>
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_resolucionBeca">
+					    
+					     <!-- BEGIN: label -->
+					    <label for="ds_resolucionBeca">{value}:</label>
+					    <!-- END: label -->
+					    <br><br>
+					    <!-- BEGIN: input -->
+					    <div style="margin-left:165px;"><input id="ds_resolucionBeca" type="file" value="" size="32" name="ds_resolucionBeca" onChange="uploadAjax(this,'{actionFile}','ds_resolucionBeca')"></div>
+					    <!-- END: input -->
+					    <span id="ds_resolucionBeca_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {ds_resolucionBeca_cargado}
+						</span> 
+						
+					</div>
+					</td>
+		<!-- END: ds_resolucionBeca -->
+			</tr>
+		</table>
+		</fieldset>
+	<!-- BEGIN: field_hidden -->
+	{input_hidden}
+	<!-- END: field_hidden -->
+	
+	{intoFormCustomHTML}
+</form>
+
+{customHTML}
+
+<!-- BEGIN: buttons -->
+<form id="buttons{inputId}">
+	<fieldset class="tblFooters">
+	
+		<!-- BEGIN: submit -->
+		<input type="button" value="{lbl_submit}" id="{form_id}_input_submit" onclick="javascript:submitForm('{form_id}');">
+		<!-- END: submit -->
+		
+		<!-- BEGIN: submit_ajax -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_submit_ajax" onclick="javascript: submitForm('{form_id}');">
+		<!-- END: submit_ajax -->
+		
+		<!-- BEGIN: button -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_button_{i}" onclick="javascript: {function}; ">
+		<!-- END: button -->
+	
+		<!-- BEGIN: cancel -->
+		<input type="button" value="{lbl_cancel}" id="{form_id}_input_cancel" onclick="javascript: {function};">
+		<!-- END: cancel -->
+		
+		<div class="camposRequeridos">(*) {msg_required_fields}</div>	
+	</fieldset>
+</form>	
+<!-- END: buttons -->
+<!-- END: main -->

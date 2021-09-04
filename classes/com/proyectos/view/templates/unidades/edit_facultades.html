@@ -1,0 +1,166 @@
+<!-- BEGIN: main -->
+<style>
+#unidad_facultades{
+
+}
+#unidad_facultades fieldset {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-radius: 4px 4px 0 0;
+    box-shadow:none;
+    margin-top: 1em;
+    padding: 1.5em;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+#unidad_facultades .tblFooters {
+    /*margin-top: -16px;*/
+    background: none;
+    border:none;
+    text-align: center;
+    margin-bottom: -34px;
+    margin-top: -16px;
+}
+#unidad_facultades .camposRequeridos {
+    display: none;
+}
+#unidad_facultades form fieldset .item {
+    padding: 1px;
+}
+</style>
+
+
+
+<script type="text/javascript">
+
+function before_submit_facultad(){
+
+	wait("#tbody_facultades");
+}
+
+function remove_facultad( itemOid ){
+
+	before_submit_facultad();
+	soft_load(false, "doAction?action=delete_unidad_facultad_session&item_oid="+itemOid, "GET", null, show_facultades, false);
+}
+
+function add_facultad( data ){
+	show_facultades( data );
+	$("#item_oid").val("");
+	$("#item_oid").blur();
+	//$("#item_oid").focus();
+}
+
+function show_facultades( data ){
+	
+	var data = $.parseJSON(data);
+	if( data != null && data["error"]!=null){
+		showMessageError( data["error"], true );
+	}
+	
+	if( data != null && data["facultades"]!=null){
+
+		var facultades = data["facultades"];
+		var facultadColumns = data["facultadColumns"];
+		var facultadColumnsAlign = data["facultadColumnsAlign"];
+		var facultadColumnsLabels = data["facultadColumnsLabels"];
+
+		$('#thead_facultades').find('tr').remove();
+		$("#thead_facultades").last().append( $('<tr>') );
+		var trHeadEspecialidad = $('#thead_facultades').find('tr').last();
+		
+		for( var colIndex=0; colIndex < facultadColumnsLabels.length;colIndex++){
+
+			var label = facultadColumnsLabels[colIndex];
+			var align =  facultadColumnsAlign[colIndex];
+			trHeadEspecialidad.append($('<th>')
+	                .text( label )
+	                .attr('style', 'text-align:' + align + ';')
+	            );
+			
+		}
+
+		$('#tbody_facultades').find('tr').remove();
+				
+		for( var index=0; index< facultades.length;index++){
+
+			var facultad = facultades[index];
+
+			$("#tbody_facultades").last().append( $('<tr>') );
+			
+			var trEspecialidad = $('#tbody_facultades').find('tr').last();
+			
+			for( var colIndex=0; colIndex < facultadColumns.length;colIndex++){
+
+				var column = facultadColumns[colIndex];
+				var align =  facultadColumnsAlign[colIndex];
+				var valor = facultad[column]; 
+
+				trEspecialidad.append($('<td>')
+		                .text( valor )
+		                .attr('style', 'text-align:' + align + ';')
+		            );
+				
+			}
+
+
+			trEspecialidad.append($('<td>')
+					.attr('style', 'text-align:center;')
+					.append($('<href>')
+							.append($('<img>')
+					                .attr('src', '{WEB_PATH}css/smile/images/chk_off.png')
+					                .text('quitar')
+					            )
+					        .attr('href', '#')
+					        .attr('style', 'cursor:pointer;')
+					        .attr('onclick', 'javascript: remove_facultad( encodeURI( \"' + facultad["item_oid"] +  '\"));' )
+			            )
+	            ); 
+
+		}
+		
+	}
+
+	wakeUp("#tbody_facultades");
+	
+	$("#titulo").val("");		
+	$("#titulo").focus();
+	
+	
+}
+
+
+
+</script>
+<div id="unidad_facultades">
+<fieldset>
+	<legend>{facultades_title}</legend>
+<table id="facultades">
+   	<thead id="thead_facultades">
+   	<tr>
+   		<!-- BEGIN: facultad_th -->
+   		<th style="text-align: {align};">{facultad_label}</th>
+   		<!-- END: facultad_th -->
+   		<th></th>
+   	</tr>
+   	</thead>
+   	<tbody id="tbody_facultades">
+   	<!-- BEGIN: facultad -->   	
+   	<tr>
+   		<!-- BEGIN: facultad_data -->	
+   		<td style="text-align: {align};">{data}</td>
+   		<!-- END: facultad_data -->
+   		
+   		<td style="text-align: center;">
+   			<!-- BEGIN:editar_facultad -->
+   			<a href="#"><img src='{WEB_PATH}css/smile/images/chk_off.png' style="cursor:pointer;" onclick="javascript: remove_facultad(encodeURI('{item_oid}'));"></a>
+   			<!-- END:editar_facultad -->
+   		</td>
+   	</tr>
+   	<!-- END: facultad -->
+   	</tbody>
+</table>
+<br />
+{formulario}
+</fieldset>
+    
+</div>
+<!-- END: main -->

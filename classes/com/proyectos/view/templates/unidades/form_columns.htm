@@ -1,0 +1,379 @@
+<!-- BEGIN: main -->
+<script type="text/javascript" src="{WEB_PATH}libs/ckeditor/ckeditor.js"></script>
+<style>
+#formTabs{
+
+}
+#formTabs fieldset {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-radius: 4px 4px 0 0;
+    box-shadow:none;
+    margin-top: 1em;
+    padding: 1.5em;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+</style>
+<script type="text/javascript">
+window.onload = function() {
+	
+	CKEDITOR.replace('objetivos',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('lineas',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('justificacion',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('produccion',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('proyectos',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('rrhh',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('funciones',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('reglamento',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('infraestructura',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+	
+	CKEDITOR.replace('equipamiento',{toolbar:'Basic',width:'800',height:'150',filebrowserBrowseUrl : '{WEB_PATH}libs/ckeditor/filemanager/browser/default/browser.html?Connector={WEB_PATH}libs/ckeditor/filemanager/connectors/php/connector.php?Type=Image',
+		  filebrowserWindowWidth : '800',
+		  filebrowserWindowHeight : '150'});
+
+	
+	
+
+}
+
+$(function() {
+
+	$( "#tabs" ).tabs();
+});
+
+
+
+$(function() {
+
+        $("#{form_id}").submit(function(e) {
+        	$("#objetivos").val(CKEDITOR.instances.objetivos.getData());
+        	$("#lineas").val(CKEDITOR.instances.lineas.getData());
+        	$("#justificacion").val(CKEDITOR.instances.justificacion.getData());
+        	$("#produccion").val(CKEDITOR.instances.produccion.getData());
+        	$("#proyectos").val(CKEDITOR.instances.proyectos.getData());
+        	$("#rrhh").val(CKEDITOR.instances.rrhh.getData());
+        	$("#funciones").val(CKEDITOR.instances.funciones.getData());
+        	$("#reglamento").val(CKEDITOR.instances.reglamento.getData());
+        	$("#infraestructura").val(CKEDITOR.instances.infraestructura.getData());
+        	$("#equipamiento").val(CKEDITOR.instances.equipamiento.getData());
+        	if( $("#{form_id}_input_submit").length > 0){
+        		$submit = $("#{form_id}_input_submit");
+            	$restoreOpacity = $submit.css("opacity");	
+        	}
+        	
+        	
+        	 e.preventDefault();
+        	 
+        	 if( {useAjaxSubmit} ) {
+
+                	submitAjaxForm('{form_id}', '{action}', {onSuccessCallback},{beforeSubmit});
+                	
+                	return false;
+             }else{
+            	 
+            	
+         		$submit.css({"opacity":$restoreOpacity});
+         		$submit.removeAttr( "disabled" );
+             }
+        	 
+        	 
+        	 
+        });
+	
+            								
+});
+
+
+
+
+function successDefault_{form_id}(data ){
+
+	try {
+		
+		 jsondata = $.parseJSON(data);
+
+		 if( jsondata != null && jsondata["error"]!=null){
+				showMessageError( jsondata["error"], false );
+			}
+
+		 if( jsondata != null && jsondata["info"]!=null){
+				//showMessageInfo( jsondata["info"], false );
+				//$('#{form_id}').reset();
+				{onCancel};
+				
+			}			
+	} catch (e) {
+	   return;
+	}
+	
+	
+}
+
+
+
+</script>
+
+<form <!-- BEGIN: property --> {name}="{value}" <!-- END: property --> >
+<a name="ancla" id="ancla"></a>
+	<!-- BEGIN: fieldset -->
+		<fieldset>
+	    <!-- BEGIN: legend -->
+		<legend>{value}</legend>
+		<!-- END: legend -->
+
+		<table width="100%">
+			<tr>
+				<!-- BEGIN:column -->
+				<td>
+					<!-- BEGIN: oid -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: oid -->
+					<!-- BEGIN: tipoUnidad_oid -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: tipoUnidad_oid -->
+					<!-- BEGIN: denominacion -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: denominacion -->
+					<!-- BEGIN: especialidad -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: especialidad -->
+					<!-- BEGIN: observaciones -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: observaciones -->
+				</td>
+				<!-- END:column -->
+			</tr>
+		</table>
+		
+	</fieldset>
+	<!-- END: fieldset -->
+	<!-- BEGIN: field_hidden -->
+	{input_hidden}
+	<!-- END: field_hidden -->
+	<div id="tabs">
+	<ul>
+		
+		<li><a href="#tabs-1">{finalidad_tab}</a></li>
+		<li><a href="#tabs-2">{antecedentes_tab}</a></li>
+		<li><a href="#tabs-3">{funciones_tab}</a></li>
+	</ul>
+<div id="formTabs">
+<fieldset>	
+	
+	
+	<div id="tabs-1" style="position:relative;">
+	
+		<!-- BEGIN: objetivos -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: objetivos -->
+		<!-- BEGIN: lineas -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: lineas -->
+		<!-- BEGIN: justificacion -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: justificacion -->
+	</div>
+	<div id="tabs-2" style="position:relative;">
+		<!-- BEGIN: produccion -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: produccion -->
+		<!-- BEGIN: proyectos -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: proyectos -->
+		<!-- BEGIN: rrhh -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: rrhh -->
+	</div>
+	
+	<div id="tabs-3" style="position:relative;">
+		<!-- BEGIN: funciones -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: funciones -->
+		<!-- BEGIN: reglamento -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: reglamento -->
+		<!-- BEGIN: infraestructura -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: infraestructura -->
+		<!-- BEGIN: equipamiento -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+					    
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+		<!-- END: equipamiento -->
+	</div>
+</fieldset>	
+</div>	
+</div>
+	{intoFormCustomHTML}
+</form>
+
+{customHTML}
+
+<!-- BEGIN: buttons -->
+<form id="buttons{inputId}">
+	<fieldset class="tblFooters">
+	
+		<!-- BEGIN: submit -->
+		<input type="button" value="{lbl_submit}" id="{form_id}_input_submit" onclick="javascript:submitForm('{form_id}');">
+		<!-- END: submit -->
+		
+		<!-- BEGIN: submit_ajax -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_submit_ajax" onclick="javascript: submitForm('{form_id}');">
+		<!-- END: submit_ajax -->
+		
+		<!-- BEGIN: button -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_button_{i}" onclick="javascript: {function}; ">
+		<!-- END: button -->
+	
+		<!-- BEGIN: cancel -->
+		<input type="button" value="{lbl_cancel}" id="{form_id}_input_cancel" onclick="javascript: {function};">
+		<!-- END: cancel -->
+		
+		<div class="camposRequeridos">(*) {msg_required_fields}</div>	
+	</fieldset>
+</form>	
+<!-- END: buttons -->
+<!-- END: main -->
