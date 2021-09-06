@@ -171,7 +171,7 @@
 	<action name='edit_cdtuserprofile_init' class='EditCYTUserProfileInitAction' />
 	<action name='view_new_cdtuser' class='ViewNewCdtUserAction' />
 	<action name='unblock_cdtuser' class='UnblockCYTUserAction' />
-	
+
 	<action name='add_user_userGroup_session' class='AddUserUserGroupSessionAction' />
 	<action name='delete_user_usergroup_session' class='DeleteUserUserGroupSessionAction' />
 
@@ -256,8 +256,13 @@
 	<!-- Proyectos -->
 	<!-- ********************************* -->
 
+    <!-- docentes -->
 
-	
+    <action name='list_docentes' class='ListDocentesAction'
+            currentMenuGroup='10' />
+
+    <action name='view_docente' class='ViewDocenteAction' currentMenuGroup='10' />
+
 
 	<!-- proyectos -->
 
@@ -265,8 +270,8 @@
 		currentMenuGroup='10' />
 
 	<action name='view_proyecto' class='ViewProyectoAction' currentMenuGroup='10' />
-	
-	
+
+
 	<!-- integrantes -->
 
 	<action name='list_integrantes' class='ListIntegrantesAction'
@@ -277,56 +282,56 @@
 		currentMenuGroup='10' />
 	<action name='add_integrante_docente' class='AddIntegranteDocenteAction' />
 	<action name='add_integrante_tipo_beca' class='AddIntegranteTipoBecaAction' />
-		
+
 	<action name='update_integrante' class='UpdateIntegranteAction' />
 	<action name='update_integrante_init' class='UpdateIntegranteInitAction'
 		currentMenuGroup='10' />
 	<action name='view_integrante' class='ViewIntegranteAction' currentMenuGroup='10' />
 	<action name='delete_integrante' class='DeleteIntegranteAction' />
-	
+
 	<action name='baja_integrante' class='BajaIntegranteAction' />
 	<action name='baja_integrante_init' class='BajaIntegranteInitAction'
 		currentMenuGroup='10' />
-		
+
 	<action name='cambiar_integrante' class='CambiarIntegranteAction' />
 	<action name='cambiar_integrante_init' class='CambiarIntegranteInitAction'
 		currentMenuGroup='10' />
-		
+
 	<action name='cambiar_horas' class='CambiarHorasAction' />
 	<action name='cambiar_horas_init' class='CambiarHorasInitAction'
 		currentMenuGroup='10' />
-	
+
 	<action name='add_file_session' class='AddFileSessionAction' />
-	
+
 	<action name='view_solicitud_integrante_pdf' class='ViewSolicitudPDFAction' currentMenuGroup='10' />
-	
+
 	<action name='send_solicitud_integrante' class='SendSolicitudAction' />
 	<action name='admit_solicitud_integrante' class='AdmitSolicitudAction' />
 	<action name='deny_solicitud_integrante_init' class='DenySolicitudInitAction' />
 	<action name='deny_solicitud_integrante' class='DenySolicitudAction' />
-	
+
 	<action name='anular_solicitud_integrante_init' class='AnularSolicitudInitAction' />
 	<action name='anular_solicitud_integrante' class='AnularSolicitudAction' />
-	
+
 	<action name='list_integrantesEstado' class='ListIntegrantesEstadoAction'
 		currentMenuGroup='10' />
-		
+
 	<action name='cambiarEstadoIntegrante_init' class='CambiarEstadoIntegranteInitAction'
 		currentMenuGroup='10' />
 	<action name='cambiarEstadoIntegrante' class='CambiarEstadoIntegranteAction' />
-	
+
 	<action name='export_integrante_xls' class='ExportIntegranteXLSAction' />
-	
+
 	<!-- titulos -->
 	<action name='add_titulo_init' class='AddTituloInitAction' />
 	<action name='add_titulo' class='AddTituloAction' />
 	<action name='add_titulo_popup_init' class='AddTituloPopupInitAction' />
-	
+
 	<!-- universidades -->
 	<action name='add_universidad_init' class='AddUniversidadInitAction' />
 	<action name='add_universidad' class='AddUniversidadAction' />
 	<action name='add_universidad_popup_init' class='AddUniversidadPopupInitAction' />
-	
+
 	<action name='backup_bbdd' class='BackupBBDDAction' currentMenuGroup='2'/>
-	
+
 </navegation>
