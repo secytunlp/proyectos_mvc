@@ -187,4 +187,6 @@ define('CYT_MSG_INTEGRANTE_SOLICITUD_ANULAR', 'Anular baja/cambio', true);
 
 define('CYT_LBL_INTEGRANTE_ELIMINAR_ALTA_PREGUNTA', 'Confirma eliminar el Alta creada?', true);
 
+define('CYT_MSG_DOCENTE_TITLE_LIST', 'Investigadores', true);
+
 ?>
