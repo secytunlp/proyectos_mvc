@@ -23,13 +23,10 @@ class DocenteGridModel extends GridModel {
 		$this->addFilter( GridModelBuilder::buildFilterModelFromColumn( $column ) );
 
 
-		$column = GridModelBuilder::buildColumn( "ds_apellido", CYT_LBL_DOCENTE, 50, CDT_CMP_GRID_TEXTALIGN_LEFT, "ds_apellido" ) ;
-		$this->addColumn( $column );
-
-        $column = GridModelBuilder::buildColumn( "ds_nombre", CYT_LBL_DOCENTE, 50, CDT_CMP_GRID_TEXTALIGN_LEFT, "ds_nombre" ) ;
+        $column = GridModelBuilder::buildColumn( "ds_apellido,ds_nombre", CYT_LBL_DOCENTE, 50, CDT_CMP_GRID_TEXTALIGN_LEFT, "ds_apellido,ds_nombre" ) ;
         $this->addColumn( $column );
 
-		$tDocente = CYTSecureDAOFactory::getDocenteDAO()->getTableName();
+
 		$column = GridModelBuilder::buildColumn( "cuil", CYT_LBL_INTEGRANTE_CUIL, 20, CDT_CMP_GRID_TEXTALIGN_CENTER, "cuil" );
 		$this->addColumn( $column );
 
