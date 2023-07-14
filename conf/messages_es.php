@@ -78,6 +78,7 @@ define('CYT_MSG_INTEGRANTE_TITLE_DELETE', 'Borrar ' . CYT_LBL_INTEGRANTE , true)
 define('CYT_MSG_INTEGRANTE_TITLE_BAJA', 'Dar de baja ' . CYT_LBL_INTEGRANTE, true);
 define('CYT_MSG_INTEGRANTE_TITLE_CAMBIAR', 'Cambiar Colaborador ' , true);
 define('CYT_MSG_INTEGRANTE_TITLE_CAMBIAR_HS', 'Cambiar Dedicación Horaria ' , true);
+define('CYT_MSG_INTEGRANTE_TITLE_CAMBIAR_TIPO', 'Cambiar Tipo de Integrante ' , true);
 
 define('CYT_MSG_INTEGRANTE_APELLIDO_CV_REQUIRED', 'Para poder subir los archivos debe ingresar el apellido y CUIL del investigador', true);
 define('CYT_MSG_INTEGRANTE_TIPO_INTEGRANTE_REQUIRED', CYT_LBL_TIPO_INTEGRANTE. ' es requerido', true);
@@ -121,7 +122,7 @@ define('CYT_MSG_INTEGRANTE_DEDDOC_EXCLUSIVA_HORAS_MIN', 'Las hs. en el proyecto 
 define('CYT_MSG_INTEGRANTE_DEDDOC_SEMIEXCLUSIVA_HORAS', 'Las hs. en el/los proyecto/s no deben superar 15', true);
 define('CYT_MSG_INTEGRANTE_DEDDOC_SEMIEXCLUSIVA_HORAS_MIN', 'Las hs. en el proyecto deben ser mayor a 6', true);
 define('CYT_MSG_INTEGRANTE_SIN_TITULO', 'Debe especificar un título de grado', true);
-define('CYT_MSG_INTEGRANTE_SIN_MATERIAS_ADEUDADAS', 'Debe especificar las Materias adeudadas (si no es estudiante complete el título de grado)', true);
+define('CYT_MSG_INTEGRANTE_SIN_MATERIAS_ADEUDADAS', 'Debe especificar Carrera, Total de materia y Materias adeudadas (si no es estudiante complete el título de grado)', true);
 define('CYT_MSG_INTEGRANTE_SIN_FECHA_BECA_ESTIMULO', 'Debe especificar las fechas de la Beca de Estímulo a las Vocaciones Científicas', true);
 define('CYT_MSG_COLABORADOR_CON_CARGO', 'Los COLABORADORES no deben tener cargo docente ni Beca ni cargo en la Carrera de Investigación', true);
 define('CYT_MSG_COLABORADOR_CON_OTRO_PROYECTO', 'El docente ya forma parte de otro proyecto en ejecución', true);
@@ -134,10 +135,10 @@ define('CYT_MSG_INTEGRANTE_ALTA_FUERA_PERIODO', 'Fecha de alta fuera del períod
 
 define('CYT_MSG_INTEGRANTE_ELIMINAR_PROHIBIDO', 'Sólo se pueden eliminar los investigadores con estado ALTA CREADA', true);
 define('CYT_MSG_INTEGRANTE_MODIFICAR_PROHIBIDO', 'Sólo se pueden modificar los investigadores con estado ALTA CREADA', true);
-define('CYT_MSG_INTEGRANTE_ENVIAR_PROHIBIDO', 'Sólo se pueden enviar los investigadores con estado ALTA CREADA, BAJA CREADA, CAMBIO CREADO ó CAMBIO HS. CREADO', true);
-define('CYT_MSG_INTEGRANTE_VER_PROHIBIDO', 'Sólo se pueden ver los PDFs de los investigadores con estado ALTA CREADA, ALTA RECIBIDA, BAJA CREADA, BAJA RECIBIDA, CAMBIO CREADO, CAMBIO RECIBIDO, CAMBIO HS. CREADO ó CAMBIO HS. RECIBIDO', true);
-define('CYT_MSG_INTEGRANTE_ADMITIR_PROHIBIDO', 'Sólo se pueden admitir los investigadores con estado ALTA RECIBIDA, BAJA RECIBIDA, CAMBIO RECIBIDO ó CAMBIO HS. RECIBIDO', true);
-define('CYT_MSG_INTEGRANTE_RECHAZAR_PROHIBIDO', 'Sólo se pueden rechazar los investigadores con estado ALTA RECIBIDA, BAJA RECIBIDA, CAMBIO RECIBIDO ó CAMBIO HS. RECIBIDO', true);
+define('CYT_MSG_INTEGRANTE_ENVIAR_PROHIBIDO', 'Sólo se pueden enviar los investigadores con estado ALTA CREADA, BAJA CREADA, CAMBIO CREADO, CAMBIO HS. CREADO ó CAMBIO TIPO CREADO', true);
+define('CYT_MSG_INTEGRANTE_VER_PROHIBIDO', 'Sólo se pueden ver los PDFs de los investigadores con estado ALTA CREADA, ALTA RECIBIDA, BAJA CREADA, BAJA RECIBIDA, CAMBIO CREADO, CAMBIO RECIBIDO, CAMBIO HS. CREADO, CAMBIO HS. RECIBIDO, CAMBIO TIPO CREADO ó CAMBIO TIPO RECIBIDO', true);
+define('CYT_MSG_INTEGRANTE_ADMITIR_PROHIBIDO', 'Sólo se pueden admitir los investigadores con estado ALTA RECIBIDA, BAJA RECIBIDA, CAMBIO RECIBIDO, CAMBIO HS. RECIBIDO ó CAMBIO TIPO RECIBIDO', true);
+define('CYT_MSG_INTEGRANTE_RECHAZAR_PROHIBIDO', 'Sólo se pueden rechazar los investigadores con estado ALTA RECIBIDA, BAJA RECIBIDA, CAMBIO RECIBIDO, CAMBIO HS. RECIBIDO ó CAMBIO TIPO RECIBIDO', true);
 define('CYT_MSG_INTEGRANTE_BAJA_PROHIBIDO', 'No se pueden dar de baja a los investigadores que tienen estados pendientes de confirmación', true);
 define('CYT_MSG_INTEGRANTE_BAJA_PROHIBIDO2', 'No se pueden dar de baja a los Directores ni Codirectores', true);
 define('CYT_MSG_INTEGRANTE_BAJA_PROHIBIDO3', 'El investigador ya tiene una fecha de baja', true);
@@ -152,6 +153,9 @@ define('CYT_MSG_INTEGRANTE_MIN_HORAS_TOTALES', 'La suma de dedicaciones horarias
 define('CYT_MSG_INTEGRANTE_CAMBIO_PROHIBIDO', 'No se pueden cambiar a los investigadores que tienen estados pendientes de confirmación', true);
 define('CYT_MSG_INTEGRANTE_CAMBIO_PROHIBIDO2', 'Sólo se pueden cambiar los COLABORADORES', true);
 define('CYT_MSG_INTEGRANTE_CAMBIO_PROHIBIDO3', 'El investigador tiene fecha de baja', true);
+
+define('CYT_MSG_INTEGRANTE_CAMBIO_TIPO_PROHIBIDO', 'NO se pueden cambiar los tipos de los DIRECTORES, CODIRECTORS o COLABORADORES', true);
+define('CYT_MSG_INTEGRANTE_CAMBIO_TIPO_PROHIBIDO2', 'NO se pueden cambiar los tipos de los integrates con estado CAMBIO TIPO CREADO', true);
 
 define('CYT_MSG_INTEGRANTE_CAMBIO_HS_PROHIBIDO', 'No se puede cambiar la dedicación horaria de los investigadores que tienen estados pendientes de confirmación', true);
 
@@ -187,6 +191,11 @@ define('CYT_MSG_INTEGRANTE_SOLICITUD_ANULAR', 'Anular baja/cambio', true);
 
 define('CYT_LBL_INTEGRANTE_ELIMINAR_ALTA_PREGUNTA', 'Confirma eliminar el Alta creada?', true);
 
+/* INVESTIGADORES */
+
 define('CYT_MSG_DOCENTE_TITLE_LIST', 'Investigadores', true);
+define('CYT_MSG_DOCENTE_TITLE_ADD', 'Agregar ' . CYT_LBL_DOCENTE, true);
+define('CYT_MSG_DOCENTE_TITLE_UPDATE', 'Modificar ' . CYT_LBL_DOCENTE , true);
+
 
 ?>

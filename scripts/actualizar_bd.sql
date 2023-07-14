@@ -837,4 +837,11 @@ CREATE TABLE `aux_subsidios_proyectos` (
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB;
 
-	
+###################################14/07/2023###################################################
+ALTER TABLE `integrante`
+	ADD COLUMN `nu_totalMat` INT(11) NULL,
+	ADD COLUMN `ds_carrera` VARCHAR(255) NULL DEFAULT NULL;
+
+ALTER TABLE `docente`
+	ADD COLUMN `nu_totalMat` INT(11) NULL,
+	ADD COLUMN `ds_carrera` VARCHAR(255) NULL DEFAULT NULL;

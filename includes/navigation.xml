@@ -263,6 +263,15 @@
 
     <action name='view_docente' class='ViewDocenteAction' currentMenuGroup='10' />
 
+	<action name='add_docente' class='AddDocenteAction' />
+	<action name='add_docente_init' class='AddDocenteInitAction'
+			currentMenuGroup='10' />
+
+
+	<action name='update_docente' class='UpdateDocenteAction' />
+	<action name='update_docente_init' class='UpdateDocenteInitAction'
+			currentMenuGroup='10' />
+
 
 	<!-- proyectos -->
 
@@ -300,6 +309,10 @@
 	<action name='cambiar_horas' class='CambiarHorasAction' />
 	<action name='cambiar_horas_init' class='CambiarHorasInitAction'
 		currentMenuGroup='10' />
+
+	<action name='cambiar_tipo' class='CambiarTipoAction' />
+	<action name='cambiar_tipo_init' class='CambiarTipoInitAction'
+			currentMenuGroup='10' />
 
 	<action name='add_file_session' class='AddFileSessionAction' />
 

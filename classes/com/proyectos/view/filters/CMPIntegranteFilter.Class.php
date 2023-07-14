@@ -261,12 +261,19 @@ class CMPIntegranteFilter extends CMPFilter{
             $filter = new CdtSimpleExpression( "$tProyecto.cd_proyecto IN (".$idProyectos.") AND ($tIntegrante.dt_baja is null OR $tIntegrante.dt_baja = '0000-00-00' OR $tIntegrante.dt_baja > $tIntegrante.dt_alta OR ($tIntegrante.dt_baja = $tIntegrante.dt_alta AND $tIntegranteEstado.estado_oid != ".CYT_ESTADO_INTEGRANTE_ADMITIDO."))");
 			$criteria->setExpresion($filter);
         }
-        
-		if ($oUser->getCd_usergroup()==CYT_CD_GROUP_SECYT_PROYECTOS) {
-			$tProyecto = DAOFactory::getProyectoDAO()->getTableName();
-            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_ACREDITADO, "=");
-            /*$filter = new CdtSimpleExpression( "dt_fin > '".((Date("Y"))-1)."-12-31'");
-			$criteria->setExpresion($filter);*/
+
+        if ($oUser->getCd_usergroup()==CYT_CD_GROUP_SECYT_PROYECTOS) {
+            $tProyecto = DAOFactory::getProyectoDAO()->getTableName();
+            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_CREADO, "!=");
+            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_RECIBIDO, "!=");
+            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_ADMITIDO, "!=");
+            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_NO_ADMITIDO, "!=");
+            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_NO_ACREDITADO, "!=");
+            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_EVALUADO, "!=");
+            $criteria->addFilter("$tProyecto.cd_estado", CYT_ESTADO_PROYECTO_RETIRADO, "!=");
+            /*$filter = new CdtSimpleExpression( "$tProyecto.cd_estado IN (".CYT_ESTADO_PROYECTO_ACREDITADO.", ".CYT_ESTADO_PROYECTO_EN_EVALUACION.") ");
+             $criteria->setExpresion($filter);*/
+
         }
 		
 		$criteria->addNull('fechaHasta');

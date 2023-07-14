@@ -29,7 +29,7 @@ class SendSolicitudAction extends CdtEditAsyncAction {
 		$oCriteria->addNull('fechaHasta');
 		$managerIntegranteEstado =  ManagerFactory::getIntegranteEstadoManager();
 		$oIntegranteEstado = $managerIntegranteEstado->getEntity($oCriteria);
-		if (($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_ALTA_CREADA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_BAJA_CREADA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_CREADO)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_HS_CREADO)) {
+		if (($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_ALTA_CREADA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_BAJA_CREADA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_CREADO)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_HS_CREADO)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO)) {
 			
 			throw new GenericException( CYT_MSG_INTEGRANTE_ENVIAR_PROHIBIDO);
 		}

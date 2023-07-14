@@ -97,6 +97,12 @@ class ViewSolicitudPDFAction extends CdtAction{
 			case CYT_ESTADO_INTEGRANTE_CAMBIO_HS_RECIBIDO:
 				$ds_tipo = 'CAMBIODEDHS';
 			break;
+            case CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO:
+                $ds_tipo = 'CAMBIOTIPO';
+                break;
+            case CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_RECIBIDO:
+                $ds_tipo = 'CAMBIOTIPO';
+                break;
 			
 		}
 		
@@ -111,6 +117,10 @@ class ViewSolicitudPDFAction extends CdtAction{
 		$pdf->setDs_categoria($oIntegrante->getCategoria()->getDs_categoria());	
 		
 		$pdf->setDs_titulogrado($oIntegrante->getTitulo()->getDs_titulo());
+
+        $pdf->setDs_carrera($oIntegrante->getDs_carrera());
+
+        $pdf->setNu_totalMat($oIntegrante->getNu_totalMat());
 		
 		$pdf->setNu_materias($oIntegrante->getNu_materias());
 		

@@ -41,7 +41,7 @@ class ListIntegrantesAction extends CMPEntityGridAction{
 					$manager = ManagerFactory::getIntegranteManager();
 					$entities = $manager->getEntities($oCriteria);
 					if ($entities->size()>0) {
-						$this->layout->setException( new GenericException('Tiene integrantes y/o colaboradores con estado pendiente (Alta creada, Alta Recibida, Baja Creada, Baja Recibida, Cambio Creado, Cambio Recibido, Cambio Hs. Creado y/o Cambio Hs. Recibido), para que estos cambios puedan hacerse efectivos debe "Enviarlos" desde la acción "Enviar", imprimir la planilla de solicitud y presentarla firmada en la Unidad Académica') );
+						$this->layout->setException( new GenericException('Tiene integrantes y/o colaboradores con estado pendiente (Alta creada, Alta Recibida, Baja Creada, Baja Recibida, Cambio Creado, Cambio Recibido, Cambio Hs. Creado, Cambio Hs. Recibido, Cambio Tipo Creado y/o Cambio Tipo Recibido), para que estos cambios puedan hacerse efectivos debe "Enviarlos" desde la acción "Enviar", imprimir la planilla de solicitud y presentarla firmada en la Unidad Académica') );
 					}
 				}
 				

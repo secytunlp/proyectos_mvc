@@ -96,6 +96,10 @@ class Integrante extends Entity{
 	private $dt_becaEstimulo;
 	
 	private $dt_becaEstimuloHasta;
+
+    private $nu_totalMat;
+
+    private $ds_carrera;
 	
 	public function __construct(){
 		 
@@ -133,8 +137,10 @@ class Integrante extends Entity{
 		$this->titulo = new Titulo(); 
 		 
 		$this->titulopost = new Titulo();
-		
-		
+
+
+
+
 	}
 
 
@@ -567,5 +573,37 @@ class Integrante extends Entity{
 	{
 	    $this->ds_resolucionBeca = $ds_resolucionBeca;
 	}
+
+    /**
+     * @return mixed
+     */
+    public function getNu_totalMat()
+    {
+        return $this->nu_totalMat;
+    }
+
+    /**
+     * @param mixed $nu_totalMat
+     */
+    public function setNu_totalMat($nu_totalMat)
+    {
+        $this->nu_totalMat = $nu_totalMat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDs_carrera()
+    {
+        return $this->ds_carrera;
+    }
+
+    /**
+     * @param mixed $ds_carrera
+     */
+    public function setDs_carrera($ds_carrera)
+    {
+        $this->ds_carrera = $ds_carrera;
+    }
 }
 ?>

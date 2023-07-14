@@ -110,7 +110,7 @@ class IntegranteManager extends EntityManager{
             $oIntegranteEstado->setEstado($entity->getEstado());
             $oIntegranteEstado->setTipoIntegrante($entity->getTipoIntegrante());
             $oIntegranteEstado->setCargo($entity->getCargo());
-            $oIntegranteEstado->setDeddoc($oIntegranteEstado->getDeddoc());
+            $oIntegranteEstado->setDeddoc($entity->getDeddoc());
             $oIntegranteEstado->setCategoria($entity->getCategoria());
             $oIntegranteEstado->setFacultad($entity->getFacultad());
 
@@ -329,6 +329,55 @@ class IntegranteManager extends EntityManager{
         unset($_SESSION['archivos']);
     }
 
+    public function cambioTipo(Entity $entity) {
+        //print_r($entity);
+        $this->validateOnCambioTipo($entity);
+        //$this->updatesinvalidar($entity);
+        parent::update($entity);
+
+        $oCriteria = new CdtSearchCriteria();
+        $oCriteria->addFilter('oid', $entity->getOid(), '=');
+        $oCriteria->addNull('fechaHasta');
+        $integranteManager = ManagerFactory::getIntegranteManager();
+        $oIntegrante = $integranteManager->getEntity($oCriteria);
+        $motivo='';
+        //CYTSecureUtils::logObject($oIntegrante);
+        //print_r($oIntegrante);
+        $oIntegranteEstado = new IntegranteEstado();
+        $oIntegranteEstado->setIntegrante($oIntegrante);
+        $oIntegranteEstado->setFechaDesde(date(DB_DEFAULT_DATETIME_FORMAT));
+        $oIntegranteEstado->setEstado($oIntegrante->getEstado());
+        $oIntegranteEstado->setTipoIntegrante($oIntegrante->getTipoIntegrante());
+        $oIntegranteEstado->setCargo($oIntegrante->getCargo());
+        $oIntegranteEstado->setDeddoc($oIntegrante->getDeddoc());
+        $oIntegranteEstado->setCategoria($oIntegrante->getCategoria());
+        $oIntegranteEstado->setFacultad($oIntegrante->getFacultad());
+        $oIntegranteEstado->setCarreraInv($oIntegrante->getCarreraInv());
+        $oIntegranteEstado->setOrganismo($oIntegrante->getOrganismo());
+        $oIntegranteEstado->setDt_alta($oIntegrante->getDt_alta());
+        $oIntegranteEstado->setDs_orgbeca($oIntegrante->getDs_orgbeca());
+        $oIntegranteEstado->setDs_tipobeca($oIntegrante->getDs_tipobeca());
+        $oIntegranteEstado->setDt_beca($oIntegrante->getDt_beca());
+        $oIntegranteEstado->setDt_becaHasta($oIntegrante->getDt_becaHasta());
+        $oIntegranteEstado->setBl_becaEstimulo($oIntegrante->getBl_becaEstimulo());
+        $oIntegranteEstado->setDt_becaEstimulo($oIntegrante->getDt_becaEstimulo());
+        $oIntegranteEstado->setDt_becaEstimuloHasta($oIntegrante->getDt_becaEstimuloHasta());
+        $oIntegranteEstado->setDt_alta($oIntegrante->getDt_alta());
+        $oIntegranteEstado->setDt_baja($oIntegrante->getDt_baja());
+        $oIntegranteEstado->setDt_cambio($entity->getDt_cambioHS());
+        $oIntegranteEstado->setNu_horasinv($entity->getNu_horasinv());
+        $oIntegranteEstado->setDs_consecuencias($oIntegrante->getDs_consecuencias());
+        $oIntegranteEstado->setDs_motivos('');
+        $oIntegranteEstado->setDs_reduccionHS($oIntegrante->getDs_reduccionHS());
+
+        $oUser = CdtSecureUtils::getUserLogged();
+        $oIntegranteEstado->setUser($oUser);
+        $oIntegranteEstado->setFechaUltModificacion(date(DB_DEFAULT_DATETIME_FORMAT));
+        //print_r($oIntegranteEstado);
+        $this->cambiarEstado($oIntegrante, $oIntegranteEstado);
+        unset($_SESSION['archivos']);
+    }
+
 
     public function baja(Entity $entity) {
         //print_r($entity);
@@ -493,7 +542,7 @@ class IntegranteManager extends EntityManager{
         if ($entity->getCarrerainv()->getOid()&&!$entity->getOrganismo()->getOid()){
             $error .=CYT_MSG_INTEGRANTE_SIN_ORGANISMO.'<br />';
         }
-        if ((!$entity->getTitulo()->getOid())&&((trim($entity->getNu_materias())=='')||(trim($entity->getNu_materias())=='0'))){
+        if ((!$entity->getTitulo()->getOid())&&((trim($entity->getNu_materias())=='')||(trim($entity->getNu_materias())=='0')||(trim($entity->getNu_totalMat())=='')||(trim($entity->getNu_totalMat())=='0')||(trim($entity->getDs_carrera())==''))){
             $error .=CYT_MSG_INTEGRANTE_SIN_MATERIAS_ADEUDADAS.'<br />';
         }
         if ($entity->getBl_becaEstimulo()&&(trim($entity->getDt_becaEstimulo())=='' || trim($entity->getDt_becaEstimuloHasta())=='')){
@@ -776,7 +825,7 @@ class IntegranteManager extends EntityManager{
             $error .=CYT_MSG_INTEGRANTE_CUIL_FORMAT.'<br />';
         }
 
-        if ($entity->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_HS_CREADO) {
+        if (($entity->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_HS_CREADO)&&($entity->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO)) {
             if ((date("Y").'-'.'01-01'>CYTSecureUtils::formatDateToPersist($entity->getDt_alta()))||(date("Y").'-'.'31-12'<CYTSecureUtils::formatDateToPersist($entity->getDt_alta()))){
                 $error .=CYT_MSG_INTEGRANTE_ALTA_FUERA_PERIODO.'<br />';
             }
@@ -819,7 +868,7 @@ class IntegranteManager extends EntityManager{
             $error .=CYT_MSG_INTEGRANTE_SIN_ORGANISMO.'<br />';
         }
 
-        if ((!$entity->getTitulo()->getOid())&&((trim($entity->getNu_materias())=='')||(trim($entity->getNu_materias())=='0'))){
+        if ((!$entity->getTitulo()->getOid())&&((trim($entity->getNu_materias())=='')||(trim($entity->getNu_materias())=='0')||(trim($entity->getNu_totalMat())=='')||(trim($entity->getNu_totalMat())=='0')||(trim($entity->getDs_carrera())==''))){
             $error .=CYT_MSG_INTEGRANTE_SIN_MATERIAS_ADEUDADAS.'<br />';
         }
         if ($entity->getBl_becaEstimulo() && (trim($entity->getDt_becaEstimulo())=='' || trim($entity->getDt_becaEstimuloHasta())=='')){
@@ -1373,6 +1422,34 @@ class IntegranteManager extends EntityManager{
         }
     }
 
+    protected function validateOnCambioTipo(Entity $entity){
+        //print_r($entity);
+
+        $error='';
+
+        if (($entity->getTipoIntegrante()->getOid()!=CYT_INTEGRANTE_COLABORADOR)) {
+            if (($entity->getNu_horasinv()<$entity->getNu_horasinvAnt())&&($entity->getDs_reduccionHS()=='')){
+                $error .=CYT_LBL_INTEGRANTE_CAMBIAR_HS_REDUCCION.'<br />';
+            }
+        }
+
+
+
+
+
+
+
+
+        if ($error) {
+            throw new GenericException( $error );
+        }
+
+
+        if ($error) {
+            throw new GenericException( $error );
+        }
+    }
+
     protected function validateOnSend(Entity $entity, $estado_oid){
         //print_r($entity);
 
@@ -1498,6 +1575,10 @@ class IntegranteManager extends EntityManager{
                 $recibida = CYT_ESTADO_INTEGRANTE_CAMBIO_HS_RECIBIDO;
                 $motivo = 'Envio de cambio de dedicacion horaria';
                 break;
+            case CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO:
+                $recibida = CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_RECIBIDO;
+                $motivo = 'Envio de cambio de tipo';
+                break;
         }
 
         $oEstado = new Estado();
@@ -1600,6 +1681,12 @@ class IntegranteManager extends EntityManager{
                 break;
             case CYT_ESTADO_INTEGRANTE_CAMBIO_HS_RECIBIDO:
                 $ds_tipo = 'CAMBIODEDHS';
+                break;
+            case CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO:
+                $ds_tipo = 'CAMBIOTIPO';
+                break;
+            case CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_RECIBIDO:
+                $ds_tipo = 'CAMBIOTIPO';
                 break;
 
         }
@@ -1713,7 +1800,7 @@ class IntegranteManager extends EntityManager{
         $handle=opendir($dirDoc);
         while ($archivo = readdir($handle))
         {
-            if ((is_file($dirDoc.$archivo))&&(($ds_tipo=='ALTA')&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='BAJA')&&(strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='CAMBIO')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='CAMBIODEDHS')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CV_'))&&(!strchr($archivo,'Actividades_'))&&(!strchr($archivo,'RES_BECA_'))))
+            if ((is_file($dirDoc.$archivo))&&(($ds_tipo=='ALTA')&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='BAJA')&&(strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))&&(!strchr($archivo,'CAMBIOTIPO_'))||($ds_tipo=='CAMBIO')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))&&(!strchr($archivo,'CAMBIOTIPO_'))||($ds_tipo=='CAMBIODEDHS')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIOTIPO_'))||($ds_tipo=='CAMBIOTIPO')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CV_'))&&(!strchr($archivo,'Actividades_'))&&(!strchr($archivo,'RES_BECA_'))))
             {
                 $attachs[]=$dirDoc.$archivo;
             }
@@ -1722,7 +1809,7 @@ class IntegranteManager extends EntityManager{
         $handle=opendir($dirDoc);
         while ($archivo = readdir($handle))
         {
-            if ((is_file($dirDoc.$archivo))&&(($ds_tipo=='ALTA')&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='BAJA')&&(strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='CAMBIO')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='CAMBIODEDHS')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CV_'))&&(!strchr($archivo,'Actividades_'))&&(!strchr($archivo,'RES_BECA_'))))
+            if ((is_file($dirDoc.$archivo))&&(($ds_tipo=='ALTA')&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CAMBIODEDHS_'))||($ds_tipo=='BAJA')&&(strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))&&(!strchr($archivo,'CAMBIOTIPO_'))||($ds_tipo=='CAMBIO')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))&&(!strchr($archivo,'CAMBIOTIPO_'))||($ds_tipo=='CAMBIODEDHS')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIOTIPO_'))||($ds_tipo=='CAMBIOTIPO')&&(!strchr($archivo,'ALTA_'))&&(!strchr($archivo,'BAJA_'))&&(!strchr($archivo,'CAMBIODEDHS_'))&&(!strchr($archivo,'CAMBIO_'))&&(!strchr($archivo,'CV_'))&&(!strchr($archivo,'Actividades_'))&&(!strchr($archivo,'RES_BECA_'))))
             {
                 $attachs[]=$dirDoc.$archivo;
             }
@@ -1749,10 +1836,13 @@ class IntegranteManager extends EntityManager{
             case 'CAMBIODEDHS':
                 $fecha = $oIntegrante->getDt_cambioHS();
                 break;
+            case 'CAMBIOTIPO':
+                $fecha = $oIntegrante->getDt_cambioHS();
+                break;
 
         }
-        $asunto = ($ds_tipo == 'CAMBIODEDHS')?'Cambio de dedicaciÃƒÂ³n horaria':$ds_tipo." de ".$integranteMail;
-        $tipo = ($ds_tipo == 'CAMBIODEDHS')?'Cambio de dedicaciÃƒÂ³n horaria':$ds_tipo;
+        $asunto = ($ds_tipo == 'CAMBIODEDHS')?'Cambio de dedicaciÃƒÂ³n horaria':(($ds_tipo == 'CAMBIOTIPO')?'Cambio de tipo de integrate':$ds_tipo." de ".$integranteMail);
+        $tipo = ($ds_tipo == 'CAMBIODEDHS')?'Cambio de dedicaciÃƒÂ³n horaria':(($ds_tipo == 'CAMBIOTIPO')?'Cambio de tipo de integrate':$ds_tipo);
         $asunto = CYT_LBL_INTEGRANTE_SOLICITUD.$asunto;
         $xtpl = new XTemplate( CYT_TEMPLATE_SOLICITUD_MAIL_ENVIAR );
         $xtpl->assign ( 'img_logo', WEB_PATH.'css/images/image002.gif' );
@@ -1862,6 +1952,32 @@ class IntegranteManager extends EntityManager{
                 }
                 $entity->setNu_horasinvAnt(null);
                 break;
+            case CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_RECIBIDO:
+                $dt_baja = $oIntegranteEstado->getDt_baja();
+                $ds_tipo = 'CAMBIOTIPO';
+                $fecha = ($oIntegranteEstado->getDt_cambio());
+                $ds_funcion = 'Cambio tipo de integrate';
+                if ($admitir!=1) {
+                    $oCriteria = new CdtSearchCriteria();
+                    $oCriteria->addFilter('integrante_oid', $entity->getOid(), '=');
+                    $oCriteria->addOrder('oid','DESC');
+
+                    $oIntegranteEstados = $managerIntegranteEstado->getEntities($oCriteria);
+                    $siguiente=0;
+                    foreach ($oIntegranteEstados as $integranteEstado) {
+                        if ($siguiente){
+                            $entity->setTipointegrante($integranteEstado->getTipointegrante());
+                            $entity->setNu_horasinv($integranteEstado->getNu_horasinv());
+                            //$entity->setDt_alta($integranteEstado->getDt_alta());
+                            break;
+                        }
+                        if ($integranteEstado->getMotivo()=='Iniciar cambio de tipo') {
+
+                            $siguiente=1;
+                        }
+                    }
+                }
+                break;
             default:
                 $procesar=0;
                 break;
@@ -1877,7 +1993,7 @@ class IntegranteManager extends EntityManager{
             $confirmacion = ($admitir==1)?'Confirmacion de ':'Rechazo de ';
 
             $asunto = $confirmacion.$ds_funcionMail;
-            $tipo = ($ds_tipo == 'CAMBIODEDHS')?'Cambio de dedicaciÃƒÂ³n horaria':$ds_tipo;
+            $tipo = ($ds_tipo == 'CAMBIODEDHS')?'Cambio de dedicaciÃƒÂ³n horaria':(($ds_tipo == 'CAMBIOTIPO')?'Cambio de tipo de integrante':$ds_tipo);
 
             $oEstado = new Estado();
             $oEstado->setOid(CYT_ESTADO_INTEGRANTE_ADMITIDO);
@@ -2104,6 +2220,29 @@ class IntegranteManager extends EntityManager{
                 $entity->setNu_horasinvAnt(null);
                 $motivo = 'Anular cambio de dedicacion horaria';
                 break;
+            case CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO:
+
+                $oCriteria = new CdtSearchCriteria();
+                $oCriteria->addFilter('integrante_oid', $entity->getOid(), '=');
+                $oCriteria->addOrder('oid','DESC');
+
+                $oIntegranteEstados = $managerIntegranteEstado->getEntities($oCriteria);
+                $siguiente=0;
+                foreach ($oIntegranteEstados as $integranteEstado) {
+                    if ($siguiente){
+                        $entity->setTipointegrante($integranteEstado->getTipointegrante());
+                        $entity->setNu_horasinv($integranteEstado->getNu_horasinv());
+                        //$entity->setDt_alta($integranteEstado->getDt_alta());
+                        break;
+                    }
+                    if ($integranteEstado->getMotivo()=='Iniciar cambio de tipo') {
+
+                        $siguiente=1;
+                    }
+                }
+                $motivo = 'Anular cambio de tipo';
+                break;
+
 
         }
 
@@ -2187,6 +2326,9 @@ class IntegranteManager extends EntityManager{
         $managerIntegranteEstado =  ManagerFactory::getIntegranteEstadoManager();
         $integranteEstado = $managerIntegranteEstado->getEntity($oCriteria);
         if (!empty($integranteEstado)) {
+            if (($oIntegranteEstado->getEstado()->getOid()==CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO)&&($integranteEstado->getMotivo()!='Iniciar cambio de tipo')){
+                $oIntegranteEstado->setMotivo('Iniciar cambio de tipo');
+            }
             //print_r($integranteEstado->getUser());
             $integranteEstado->setFechaHasta(date(DB_DEFAULT_DATETIME_FORMAT));
             /*$oUser = CdtSecureUtils::getUserLogged();
@@ -2266,8 +2408,13 @@ class IntegranteManager extends EntityManager{
             }
 
         }
-        else
+        else{
+            if (($oIntegranteEstado->getEstado()->getOid()==CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_CREADO)){
+                $oIntegranteEstado->setMotivo('Iniciar cambio de tipo');
+            }
             $managerIntegranteEstado->add($oIntegranteEstado);
+        }
+
     }
 
 }

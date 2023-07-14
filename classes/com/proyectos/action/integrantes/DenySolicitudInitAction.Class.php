@@ -48,7 +48,7 @@ class DenySolicitudInitAction extends EditEntityInitAction {
 		$oCriteria->addNull('fechaHasta');
 		$managerIntegranteEstado =  ManagerFactory::getIntegranteEstadoManager();
 		$oIntegranteEstado = $managerIntegranteEstado->getEntity($oCriteria);
-		if (($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_ALTA_RECIBIDA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_BAJA_RECIBIDA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_RECIBIDO)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_HS_RECIBIDO)) {
+		if (($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_ALTA_RECIBIDA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_BAJA_RECIBIDA)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_RECIBIDO)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_HS_RECIBIDO)&&($oIntegranteEstado->getEstado()->getOid()!=CYT_ESTADO_INTEGRANTE_CAMBIO_TIPO_RECIBIDO)) {
 			
 			throw new GenericException( CYT_MSG_INTEGRANTE_RECHAZAR_PROHIBIDO);
 		}

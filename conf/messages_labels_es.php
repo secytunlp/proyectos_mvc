@@ -94,8 +94,10 @@ define('CYT_LBL_INTEGRANTE_TIPO_BECA_UNLP9', 'Programa de retención de Doctores
 
 define('CYT_LBL_INTEGRANTE_FECHA_BECA', 'Inicio de la beca', true);
 define('CYT_LBL_INTEGRANTE_FECHA_BECA_HASTA', 'Fin de la beca', true);
-define('CYT_LBL_INTEGRANTE_HORAS', 'Hs. dedicadas al proyecto', true);
+define('CYT_LBL_INTEGRANTE_HORAS', 'Hs. ded. al proyecto', true);
+define('CYT_LBL_INTEGRANTE_CARRERA', 'Carrera', true);
 define('CYT_LBL_INTEGRANTE_MATERIAS', 'Materias adeudadas', true);
+define('CYT_LBL_INTEGRANTE_TOTAL_MATERIAS', 'Materias totales', true);
 
 define('CYT_LBL_INTEGRANTE_BL_BECA_ESTIMULO', 'Beca EVC', true);
 
@@ -120,6 +122,7 @@ define('CYT_LBL_INTEGRANTE_FECHA_BAJA', 'Fecha de baja', true);
 
 define('CYT_LBL_INTEGRANTE_CAMBIAR', 'Cambiar_colab.', true);
 define('CYT_LBL_INTEGRANTE_CAMBIAR_HS', 'Cambiar_ded_horaria', true);
+define('CYT_LBL_TIPO_CAMBIAR', 'Cambiar_Tipo', true);
 
 define('CYT_LBL_INTEGRANTE_CAMBIAR_HS_REDUCCION', 'En el caso de ser una reducción horaria, especificar las consecuencias que la misma tendrá en el desarrollo del proyecto', true);
 define('CYT_LBL_INTEGRANTE_FECHA_CAMBIO', 'Fecha del Cambio', true);

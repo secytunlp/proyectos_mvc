@@ -137,6 +137,8 @@ class IntegranteGridModel extends GridModel {
 			$actions->addItem( $action );
 			$action = $this->buildRowAction( "cambiar_horas_init", "cambiar_horas_init", CYT_LBL_INTEGRANTE_CAMBIAR_HS . " ".CPIQ_LBL_INTEGRANTE, CDT_UI_IMG_EDIT, "edit") ;
 			$actions->addItem( $action );
+            $action = $this->buildRowAction( "cambiar_tipo_init", "cambiar_tipo_init", CYT_LBL_TIPO_CAMBIAR . " ".CPIQ_LBL_INTEGRANTE, CDT_UI_IMG_EDIT, "edit") ;
+            $actions->addItem( $action );
 			$action =  $this->buildRowAction( "anular_solicitud_integrante_init", "anular_solicitud_integrante_init", CYT_LBL_INTEGRANTE_ANULAR, CDT_UI_IMG_EDIT, "delete") ;
 			$actions->addItem( $action );
 			$action =  $this->buildRowAction( "send_solicitud_integrante", "send_solicitud_integrante", CYT_LBL_ENVIAR, CDT_UI_IMG_SEARCH, "view", "delete_items('send_solicitud_integrante')", false, $this->getMsgConfirmSend(CYT_MSG_SOLICITUD_ENVIAR_PREGUNTA)) ;

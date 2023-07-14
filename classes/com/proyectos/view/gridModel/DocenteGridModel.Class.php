@@ -62,6 +62,7 @@ class DocenteGridModel extends GridModel {
 		$column = GridModelBuilder::buildColumn( "facultad.ds_facultad", CYT_LBL_INTEGRANTE_FACULTAD, 40, CDT_CMP_GRID_TEXTALIGN_LEFT, "$tFacultad.ds_facultad" );
 		$this->addColumn( $column );
 
+		$this->buildAction("add_docente_init", "add_docente_init", CYT_LBL_AGREGAR, "image", "add");
 
 	}
 
@@ -89,7 +90,11 @@ class DocenteGridModel extends GridModel {
 
 		$actions = new ItemCollection();
 
-
+		/*$oUser = CdtSecureUtils::getUserLogged();
+		if (CdtSecureUtils::hasPermission ( $oUser, CYT_FUNCTION_LISTAR_ESTADO )) {
+			$action = $this->buildRowAction( "update_docente_init", "update_docente_init", CYT_LBL_EDITAR , CDT_UI_IMG_EDIT, "edit") ;
+			$actions->addItem( $action );
+		}*/
 
 
 		return $actions;

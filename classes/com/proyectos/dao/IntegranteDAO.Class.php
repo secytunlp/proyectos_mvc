@@ -55,6 +55,8 @@ class IntegranteDAO extends EntityDAO {
 		$fieldsValues["bl_becaEstimulo"] = $this->formatIfNull( $entity->getBl_becaEstimulo(), '0' );
 		$fieldsValues["dt_becaEstimulo"] = $this->formatDate( $entity->getDt_becaEstimulo() );
 		$fieldsValues["dt_becaEstimuloHasta"] = $this->formatDate( $entity->getDt_becaEstimuloHasta() );
+        $fieldsValues["nu_totalMat"] = $this->formatIfNull( $entity->getNu_totalMat(), '0' );
+        $fieldsValues["ds_carrera"] = $this->formatString( $entity->getDs_carrera() );
 		
 
 		return $fieldsValues;
@@ -97,6 +99,8 @@ class IntegranteDAO extends EntityDAO {
 		$fieldsValues["bl_becaEstimulo"] = $this->formatIfNull( $entity->getBl_becaEstimulo(), '0' );
 		$fieldsValues["dt_becaEstimulo"] = $this->formatDate( $entity->getDt_becaEstimulo() );
 		$fieldsValues["dt_becaEstimuloHasta"] = $this->formatDate( $entity->getDt_becaEstimuloHasta() );
+        $fieldsValues["nu_totalMat"] = $this->formatIfNull( $entity->getNu_totalMat(), '0' );
+        $fieldsValues["ds_carrera"] = $this->formatString( $entity->getDs_carrera() );
 		return $fieldsValues;
 	}
 	

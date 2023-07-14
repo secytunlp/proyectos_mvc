@@ -135,9 +135,19 @@ class CMPIntegranteForm extends CMPForm{
 		$fieldTitulo = CYTSecureComponentsFactory::getFindTituloPosgradoWithAdd(new Titulo(), CYT_LBL_DOCENTE_TITULO_POSGRADO, "", "integrante_filter_titulopost_oid", "titulopost.oid","integrante_filter_titulopost_change");
 		$fieldTitulo->getInput()->setInputSize(5,70);
 		$fieldset->addField( $fieldTitulo );
+
+		$fieldNombre = FieldBuilder::buildFieldText ( CYT_LBL_INTEGRANTE_CARRERA, "ds_carrera" );
+		$fieldNombre->getInput()->addProperty("size", 80);
+		$fieldset->addField( $fieldNombre );
+
+		$field = FieldBuilder::buildFieldNumber ( CYT_LBL_INTEGRANTE_TOTAL_MATERIAS, "nu_totalMat") ;
+		$field->getInput()->addProperty("size", 5);
+		$fieldset->addField( $field );
+
+
 		
 		$field = FieldBuilder::buildFieldNumber ( CYT_LBL_INTEGRANTE_MATERIAS, "nu_materias") ;
-		//$field->getInput()->setIsVisible(false);
+		$field->getInput()->addProperty("size", 5);
 		$fieldset->addField( $field );
 		
 		$fieldset->addField( FieldBuilder::buildFieldCheckbox ( CYT_LBL_INTEGRANTE_BL_BECA_ESTIMULO, "bl_becaEstimulo", "bl_becaEstimulo") );

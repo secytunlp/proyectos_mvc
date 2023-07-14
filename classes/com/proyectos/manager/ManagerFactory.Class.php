@@ -28,6 +28,8 @@ class ManagerFactory{
 	public static function getEstadoIntegranteManager(){
 		return new EstadoIntegranteManager();
 	}
+
+
 	
 }
 
