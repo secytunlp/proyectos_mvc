@@ -30,6 +30,7 @@ function  seleccionarInstitucion(ds_institucion){
 	
 }
 
+
 function  habilitarReduccion(horas, nu_horas={nu_horasinv_control}){
 	$("#item-div-nu_horasinv").append("<span id='iconoLoading' style='position:absolute;'><img src='css/grid/loading.gif' /></span>")
 	if(horas.value<nu_horas){
@@ -162,9 +163,28 @@ function uploadAjax(file, action, name){
 		
 }
 
+$('#integrante_filter_titulo_oid').change
+
 $( document ).ready(function() {
 	$("#tipoIntegrante_oid").change();	
-	$("#nu_horasinv").change();	
+	$("#nu_horasinv").change();
+	$("#integrante_filter_titulo_oid").change(function(){
+		var oid = $("#integrante_filter_titulo_oid").val();
+
+
+		if (oid){
+
+			$('#item-div-ds_carrera').hide();
+			$('#item-div-nu_totalMat').hide();
+			$('#item-div-nu_materias').hide();
+		}
+		else{
+
+			$('#item-div-ds_carrera').show();
+			$('#item-div-nu_totalMat').show();
+			$('#item-div-nu_materias').show();
+		}
+	});
 });
 </script>
 

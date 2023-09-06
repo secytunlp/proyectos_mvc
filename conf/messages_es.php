@@ -103,6 +103,7 @@ define('CYT_MSG_INTEGRANTE_CUIL_FORMAT', 'El C.U.I.L. debe ser del formato xx-xx
 
 define('CYT_MSG_INTEGRANTE_SIN_CARGO_SIN_BECA', 'Si no posee cargo, debe ser becario o tener un cargo en la carrera de investigación', true);
 define('CYT_MSG_INTEGRANTE_BECARIO_SIN_BECA', 'Si el integrante es TESISTA, BECARIO se debe especificar la Beca', true);
+define('CYT_MSG_INTEGRANTE_BECARIO_SIN_TIPO_BECA', 'Si el integrante posee beca el tipo debe ser TESISTA, BECARIO', true);
 define('CYT_MSG_INTEGRANTE_SIN_CARGO', 'Debe especificar un cargo', true);
 define('CYT_MSG_INTEGRANTE_SIN_DEDDOC', 'Debe especificar una dedicación', true);
 define('CYT_MSG_INTEGRANTE_SIN_FECHA_CARGO', 'Debe especificar la fecha de obtención del cargo', true);

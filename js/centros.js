@@ -18,6 +18,20 @@ function integrante_filter_universidad_change(attr){
 }
 
 function integrante_filter_titulo_change(attr){
+	var valor = $("#autocomplete_integrante_filter_titulo_oid").val();
+
+	if (valor){
+
+		$('#item-div-ds_carrera').hide();
+		$('#item-div-nu_totalMat').hide();
+		$('#item-div-nu_materias').hide();
+	}
+	else{
+
+		$('#item-div-ds_carrera').show();
+		$('#item-div-nu_totalMat').show();
+		$('#item-div-nu_materias').show();
+	}
 	
 }
 

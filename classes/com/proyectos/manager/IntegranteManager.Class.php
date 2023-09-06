@@ -608,6 +608,10 @@ class IntegranteManager extends EntityManager{
                     $error .=CYT_MSG_INTEGRANTE_SIN_CARGO_SIN_BECA.'<br />';
                 }
             }
+            if(((trim($entity->getDs_tipobeca())!='')||$entity->getBl_becaEstimulo())&&($entity->getTipoIntegrante()->getOid()!=CYT_INTEGRANTE_BECARIO)){
+                $error .=CYT_MSG_INTEGRANTE_BECARIO_SIN_TIPO_BECA.'<br />';
+            }
+
             /*if (!$entity->getTitulo()->getOid()){
                 $error .=CYT_MSG_INTEGRANTE_SIN_TITULO.'<br />';
             }*/
@@ -925,6 +929,9 @@ class IntegranteManager extends EntityManager{
 
                     $error .=CYT_MSG_INTEGRANTE_SIN_CARGO_SIN_BECA.'<br />';
                 }
+            }
+            if(((trim($entity->getDs_tipobeca())!='')||$entity->getBl_becaEstimulo())&&($entity->getTipoIntegrante()->getOid()!=CYT_INTEGRANTE_BECARIO)){
+                $error .=CYT_MSG_INTEGRANTE_BECARIO_SIN_TIPO_BECA.'<br />';
             }
             /*if (!$entity->getTitulo()->getOid()){
                 $error .=CYT_MSG_INTEGRANTE_SIN_TITULO.'<br />';
